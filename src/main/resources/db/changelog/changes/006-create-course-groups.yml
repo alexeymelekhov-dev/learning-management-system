@@ -1,0 +1,25 @@
+databaseChangeLong:
+  - changeSet:
+      id: 006-create-course-groups
+      author: Alexey
+      changes:
+        - createTable:
+            tableName: course_groups
+            columns:
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_course_groups_course
+                    references: courses(id)
+
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_course_groups_group
+                    references: groups(id)
