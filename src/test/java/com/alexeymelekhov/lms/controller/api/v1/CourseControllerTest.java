@@ -1,5 +1,6 @@
 package com.alexeymelekhov.lms.controller.api.v1;
 
+import com.alexeymelekhov.lms.AbstractIT;
 import com.alexeymelekhov.lms.dto.common.ErrorResponseDTO;
 import com.alexeymelekhov.lms.dto.course.CourseCreateDTO;
 import com.alexeymelekhov.lms.dto.course.CourseDTO;
@@ -16,34 +17,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.TestRestTemplate;
-import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate
-@Testcontainers
-public class CourseControllerTest {
-
-    @Container
-    static PostgreSQLContainer postgres =
-            new PostgreSQLContainer("postgres:16");
+public class CourseControllerTest extends AbstractIT {
 
     @Autowired
     private GroupRepository groupRepository;
@@ -59,13 +43,6 @@ public class CourseControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
 
     @BeforeEach
     void setUp() {
